@@ -1,25 +1,17 @@
-import { getFilteredEvents } from "@/data";
-import { useRouter } from "next/router";
+// import { getFilteredEvents } from "@/data";
+// import { useRouter } from "next/router";
 import EventList from "@/components/events/EventList";
 import { Fragment } from "react";
 import ResultsTitle from "@/components/events/ResultsTitle";
 import ErrorAlert from "@/components/ui/ErrorAlert";
 import Button from "@/components/ui/Button";
+import { getFilteredEvents } from "@/helpers/api-util";
 
-const FilteredEventsPage = () => {
-  const router = useRouter();
-  const date = router.query.slug;
-  if (!date) return <p className="center">Loading...</p>;
-  const year = +date[0];
-  const month = +date[1];
-  if (
-    isNaN(year) ||
-    isNaN(month) ||
-    year > 2030 ||
-    year < 2021 ||
-    month > 12 ||
-    month < 1
-  )
+const FilteredEventsPage = (props) => {
+  const { filteredEvents, year, month, hasError } = props;
+  // const router = useRouter();
+  // const date = router.query.slug;
+  if (hasError)
     return (
       <Fragment>
         <ErrorAlert>
@@ -30,7 +22,11 @@ const FilteredEventsPage = () => {
         </div>
       </Fragment>
     );
-  const filteredEvents = getFilteredEvents({ year, month });
+  // if (!date) return <p className="center">Loading...</p>;
+  // const year = +date[0];
+  // const month = +date[1];
+
+  // const filteredEvents = getFilteredEvents({ year, month });
   if (!filteredEvents || !filteredEvents.length)
     return (
       <Fragment>
@@ -50,5 +46,34 @@ const FilteredEventsPage = () => {
     </Fragment>
   );
 };
+
+export async function getServerSideProps(context) {
+  const date = context.params.slug;
+  const year = +date[0];
+  const month = +date[1];
+  if (
+    isNaN(year) ||
+    isNaN(month) ||
+    year > 2030 ||
+    year < 2021 ||
+    month > 12 ||
+    month < 1
+  )
+    return {
+      props: {
+        hasError: true,
+      },
+    };
+
+  const filteredEvents = await getFilteredEvents({ year, month });
+
+  return {
+    props: {
+      filteredEvents,
+      year,
+      month,
+    },
+  };
+}
 
 export default FilteredEventsPage;
