@@ -1,3 +1,4 @@
+import Image from "next/image";
 import AddressIcon from "../icons/AddressIcon";
 import ArrowRightIcon from "../icons/ArrowRightIcon";
 import DateIcon from "../icons/DateIcon";
@@ -14,7 +15,8 @@ const EventItem = ({ title, image, date, location, id }) => {
   const exploreLink = `/events/${id}`;
   return (
     <li className={styles.item}>
-      <img src={"/" + image} alt={title} />
+      <Image src={"/" + image} alt={title} width="400" height="160" />
+      {/* <img src={"/" + image} alt={title} /> */}
       <div className={styles.content}>
         <div className={styles.summary}>
           <h2>{title}</h2>
