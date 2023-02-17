@@ -6,6 +6,7 @@ import { getDynamicPaths, getEventById } from "@/helpers/api-util";
 // import { useRouter } from "next/router";
 import { Fragment } from "react";
 import Head from "next/head";
+import Comments from "@/components/input/comments";
 
 const EventDetailPage = (props) => {
   const { event } = props;
@@ -33,6 +34,7 @@ const EventDetailPage = (props) => {
         imageAlt={event.title}
       />
       <EventContent>{event.description}</EventContent>
+      <Comments eventId={event.id} />
     </Fragment>
   );
 };
