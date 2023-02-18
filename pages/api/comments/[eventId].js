@@ -32,16 +32,14 @@ const handler = async (req, res) => {
     });
   }
   if (req.method === "GET") {
-    const dummyComments = [
-      {
-        text: "good",
-        name: "Adam",
-        id: eventId,
-      },
-    ];
+    const documents = await db
+      .collection("comments")
+      .find()
+      .sort({ _id: -1 })
+      .toArray();
 
     res.status(200).json({
-      comments: dummyComments,
+      comments: documents,
     });
   }
   client.close();
