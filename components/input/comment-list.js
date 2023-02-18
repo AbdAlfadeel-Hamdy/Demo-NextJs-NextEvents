@@ -4,7 +4,7 @@ function CommentList(props) {
   const { items } = props;
   return (
     <ul className={classes.comments}>
-      {items.map((item) => {
+      {items?.map((item) => {
         return (
           <li key={item._id}>
             <p>{item.text}</p>
