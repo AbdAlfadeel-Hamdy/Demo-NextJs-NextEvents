@@ -1,5 +1,12 @@
-const handler = (req, res) => {
+import { MongoClient } from "mongodb";
+
+const handler = async (req, res) => {
   const { eventId } = req.query;
+
+  const client = await MongoClient.connect(
+    "mongodb+srv://abdalfadeelh:5YrqUHFdiLeTTtkI@cluster0.4czxmst.mongodb.net/events?retryWrites=true&w=majority"
+  );
+  const db = client.db();
   if (req.method === "POST") {
     const { email, name, text } = req.body;
     if (
@@ -12,11 +19,13 @@ const handler = (req, res) => {
       res.status(422).json({ message: "Invalid input!" });
     }
     const newComment = {
-      id: eventId,
+      eventId,
       email,
       name,
       text,
     };
+    const result = await db.collection("comments").insertOne(newComment);
+    newComment.id = result.insertedId;
     res.status(201).json({
       message: "Added comment!",
       comment: newComment,
@@ -35,5 +44,6 @@ const handler = (req, res) => {
       comments: dummyComments,
     });
   }
+  client.close();
 };
 export default handler;
