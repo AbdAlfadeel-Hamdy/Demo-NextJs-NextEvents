@@ -12,7 +12,7 @@ const handler = (req, res) => {
       res.status(422).json({ message: "Invalid input!" });
     }
     const newComment = {
-      id: commentId,
+      id: eventId,
       email,
       name,
       text,
@@ -26,7 +26,7 @@ const handler = (req, res) => {
     const dummyComments = [
       {
         text: "good",
-        user: "Adam",
+        name: "Adam",
         id: commentId,
       },
     ];
