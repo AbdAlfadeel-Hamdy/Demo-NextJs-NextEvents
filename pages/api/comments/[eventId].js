@@ -27,7 +27,7 @@ const handler = (req, res) => {
       {
         text: "good",
         name: "Adam",
-        id: commentId,
+        id: eventId,
       },
     ];
 
