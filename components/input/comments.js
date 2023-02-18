@@ -16,7 +16,7 @@ function Comments(props) {
   function addCommentHandler(commentData) {
     // send data to API
     const commentDetails = JSON.stringify(commentData);
-    fetch(`/api/${eventId}`, {
+    fetch(`/api/comments/${eventId}`, {
       method: "POST",
       body: commentDetails,
       headers: {
