@@ -4,7 +4,7 @@ import classes from "./newsletter-registration.module.css";
 
 function NewsletterRegistration() {
   const notificationCtx = useContext(NotificationContext);
-  const { showNotification, hideNotification } = notificationCtx;
+  const { showNotification } = notificationCtx;
 
   const emailInputRef = useRef();
   function registrationHandler(event) {
